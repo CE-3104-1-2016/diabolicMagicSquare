@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_diabolic_magic_sq" default="compile.module.diabolic_magic_sq">
+  <dirname property="module.diabolic_magic_sq.basedir" file="${ant.file.module_diabolic_magic_sq}"/>
+  
+  <property name="module.jdk.home.diabolic_magic_sq" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.diabolic_magic_sq" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.diabolic_magic_sq" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.diabolic_magic_sq" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="diabolic_magic_sq.output.dir" value="${module.diabolic_magic_sq.basedir}/out/production/Diabolic Magic SQ"/>
+  <property name="diabolic_magic_sq.testoutput.dir" value="${module.diabolic_magic_sq.basedir}/out/test/Diabolic Magic SQ"/>
+  
+  <path id="diabolic_magic_sq.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="diabolic_magic_sq.module.production.classpath">
+    <path refid="${module.jdk.classpath.diabolic_magic_sq}"/>
+    <path refid="library.jpl.classpath"/>
+  </path>
+  
+  <path id="diabolic_magic_sq.runtime.production.module.classpath">
+    <pathelement location="${diabolic_magic_sq.output.dir}"/>
+    <path refid="library.jpl.classpath"/>
+  </path>
+  
+  <path id="diabolic_magic_sq.module.classpath">
+    <path refid="${module.jdk.classpath.diabolic_magic_sq}"/>
+    <pathelement location="${diabolic_magic_sq.output.dir}"/>
+    <path refid="library.jpl.classpath"/>
+  </path>
+  
+  <path id="diabolic_magic_sq.runtime.module.classpath">
+    <pathelement location="${diabolic_magic_sq.testoutput.dir}"/>
+    <pathelement location="${diabolic_magic_sq.output.dir}"/>
+    <path refid="library.jpl.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.diabolic_magic_sq">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.diabolic_magic_sq">
+    <patternset refid="excluded.from.module.diabolic_magic_sq"/>
+  </patternset>
+  
+  <path id="diabolic_magic_sq.module.sourcepath">
+    <dirset dir="${module.diabolic_magic_sq.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.diabolic_magic_sq" depends="compile.module.diabolic_magic_sq.production,compile.module.diabolic_magic_sq.tests" description="Compile module Diabolic Magic SQ"/>
+  
+  <target name="compile.module.diabolic_magic_sq.production" depends="register.custom.compilers" description="Compile module Diabolic Magic SQ; production classes">
+    <mkdir dir="${diabolic_magic_sq.output.dir}"/>
+    <javac2 destdir="${diabolic_magic_sq.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.diabolic_magic_sq}/javac">
+      <compilerarg line="${compiler.args.diabolic_magic_sq}"/>
+      <bootclasspath refid="diabolic_magic_sq.module.bootclasspath"/>
+      <classpath refid="diabolic_magic_sq.module.production.classpath"/>
+      <src refid="diabolic_magic_sq.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.diabolic_magic_sq"/>
+    </javac2>
+    
+    <copy todir="${diabolic_magic_sq.output.dir}">
+      <fileset dir="${module.diabolic_magic_sq.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.diabolic_magic_sq.tests" depends="register.custom.compilers,compile.module.diabolic_magic_sq.production" description="compile module Diabolic Magic SQ; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.diabolic_magic_sq" description="cleanup module">
+    <delete dir="${diabolic_magic_sq.output.dir}"/>
+    <delete dir="${diabolic_magic_sq.testoutput.dir}"/>
+  </target>
+</project>
